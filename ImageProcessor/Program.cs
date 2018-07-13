@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using ImageProcessor.ImageFilters;
+using MyImage;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Processing.Filters;
 
 namespace ImageProcessor
 {
@@ -39,7 +44,6 @@ namespace ImageProcessor
             res.Result.Save(output + "ilgpu2.bmp");
 
             Process.GetCurrentProcess().Kill();
-           // IlGpuFilter.GPU.Dispose();
         }
 
         static Image<Rgba32> ProcessSharp(Image<Rgba32> image)

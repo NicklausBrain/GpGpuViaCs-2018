@@ -1,4 +1,7 @@
 ﻿using System;
+using Alea.Parallel;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace ImageProcessor.ImageFilters
 {
