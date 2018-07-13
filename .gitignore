@@ -6,3 +6,5 @@
 /ImageProcessor/obj/Debug
 /packages
 /ImageProcessor/bin/Debug
+/ImageProcessor/bin/Release
+/ImageProcessor/obj/Release

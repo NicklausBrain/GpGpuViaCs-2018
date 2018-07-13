@@ -35,15 +35,16 @@ namespace ImageProcessor
             Console.WriteLine($"Alea GPU:\t{res.Elapsed}");
             res.Result.Save(output + "aleaGpu2.bmp");
 
-            res = MeasureTime(() => IlGpuFilter.Apply(image, IlGpuFilter.Invert));
-            Console.WriteLine($"IL GPU:\t\t{res.Elapsed}");
-            res.Result.Save(output + "ilgpu.bmp");
+            using (var ilGopFilter = new IlGpuFilter())
+            {
+                res = MeasureTime(() => ilGopFilter.Apply(image, IlGpuFilter.Invert));
+                Console.WriteLine($"IL GPU:\t\t{res.Elapsed}");
+                res.Result.Save(output + "ilgpu.bmp");
 
-            res = MeasureTime(() => IlGpuFilter.Apply(image, IlGpuFilter.Invert));
-            Console.WriteLine($"IL GPU:\t\t{res.Elapsed}");
-            res.Result.Save(output + "ilgpu2.bmp");
-
-            Process.GetCurrentProcess().Kill();
+                res = MeasureTime(() => ilGopFilter.Apply(image, IlGpuFilter.Invert));
+                Console.WriteLine($"IL GPU:\t\t{res.Elapsed}");
+                res.Result.Save(output + "ilgpu2.bmp");
+            }
         }
 
         static Image<Rgba32> ProcessSharp(Image<Rgba32> image)

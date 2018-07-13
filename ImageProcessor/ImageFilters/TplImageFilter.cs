@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -19,13 +20,14 @@ namespace ImageProcessor.ImageFilters
             return image;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rgba32 Invert(Rgba32 color)
         {
             return new Rgba32(
-                r: (byte)(byte.MaxValue - color.R),
-                g: (byte)(byte.MaxValue - color.G),
-                b: (byte)(byte.MaxValue - color.B),
-                a: (byte)(byte.MaxValue - color.A));
+                r: (byte)~color.R,
+                g: (byte)~color.G,
+                b: (byte)~color.B,
+                a: (byte)~color.A);
         }
     }
 }
