@@ -5,6 +5,18 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessor", "ImageProcessor\ImageProcessor.csproj", "{4F74B8D5-10B8-4E83-97F9-34139C364AEA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{FF40D766-C845-4DE6-9D21-68963A326C2C}"
+	ProjectSection(SolutionItems) = preProject
+		Images\1.bmp = Images\1.bmp
+		Images\2.bmp = Images\2.bmp
+		Images\3.bmp = Images\3.bmp
+		Images\4.bmp = Images\4.bmp
+		Images\5.bmp = Images\5.bmp
+		Images\6.bmp = Images\6.bmp
+		Images\7.bmp = Images\7.bmp
+		Images\8.bmp = Images\8.bmp
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

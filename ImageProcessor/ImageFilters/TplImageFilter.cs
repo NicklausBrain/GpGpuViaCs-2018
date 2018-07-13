@@ -10,6 +10,7 @@ namespace ImageProcessor.ImageFilters
     {
         public static Image<Rgba32> Apply(Image<Rgba32> image, Func<Rgba32, Rgba32> filter)
         {
+            image = image.Clone();
             Parallel.For(0, image.Width,
                 x => Parallel.For(0, image.Height,
                     y =>

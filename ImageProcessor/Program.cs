@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using ImageProcessor.ImageFilters;
 using MyImage;
 using SixLabors.ImageSharp;
@@ -13,58 +14,51 @@ namespace ImageProcessor
     {
         private static readonly Func<Func<Image<Rgba32>>, Measure<Image<Rgba32>>> MeasureTime = new Func<Func<Image<Rgba32>>, Measure<Image<Rgba32>>>(Measure<Image<Rgba32>>.Time);
 
-        static void Main()
+        static void Main(string[] args)
         {
-            string output = @"D:\!kira\";
-            Image<Rgba32> image = Image.Load(@"D:\!kira\kira.bmp");
-            Rgba32[] arr = new Rgba32[image.Width * image.Height];
-            image.SavePixelData(arr);
+            string srcDir = @"..\..\..\Images\";
+            string outDir = @"..\..\..\Images\";
 
-            var res = MeasureTime(() => ProcessSharp(image.Clone()));
-            Console.WriteLine($"ImageSharp:\t{res.Elapsed}");
-            res.Result.Save(output + "imageSharp.bmp");
-
-            res = MeasureTime(() => TplImageFilter.Apply(image.Clone(), TplImageFilter.Invert));
-            Console.WriteLine($"TPL:\t\t{res.Elapsed}");
-            res.Result.Save(output + "tpl.bmp");
-
-            res = MeasureTime(() => AleaGpuImageFilter.Apply(image, AleaGpuImageFilter.Invert));
-            Console.WriteLine($"Alea GPU:\t{res.Elapsed}");
-            res.Result.Save(output + "aleaGpu1.bmp");
-            res = MeasureTime(() => AleaGpuImageFilter.Apply(image, AleaGpuImageFilter.Invert));
-            Console.WriteLine($"Alea GPU:\t{res.Elapsed}");
-            res.Result.Save(output + "aleaGpu2.bmp");
-
-            using (var ilGopFilter = new IlGpuFilter())
+            if (args.Any() && args.Length == 2)
             {
-                res = MeasureTime(() => ilGopFilter.Apply(image, IlGpuFilter.Invert));
-                Console.WriteLine($"IL GPU:\t\t{res.Elapsed}");
-                res.Result.Save(output + "ilgpu.bmp");
-
-                res = MeasureTime(() => ilGopFilter.Apply(image, IlGpuFilter.Invert));
-                Console.WriteLine($"IL GPU:\t\t{res.Elapsed}");
-                res.Result.Save(output + "ilgpu2.bmp");
+                srcDir = args[0];
+                outDir = args[1];
             }
-        }
 
-        static Image<Rgba32> ProcessSharp(Image<Rgba32> image)
-        {
-            image.Mutate(context => context.Invert());
-            return image;
-        }
+            var imagePaths = Directory.GetFiles(srcDir);
 
-        static Image<Rgba32> ProcessSingleThread(Image<Rgba32> image)
-        {
-            for (int x = 0; x < image.Width; x++)
+            foreach (string imagePath in imagePaths)
             {
-                for (int y = 0; y < image.Height; y++)
+                Image<Rgba32> image = Image.Load(imagePath);
+                string imageTitle = Path.GetFileName(imagePath);
+
+                Console.WriteLine($"Processing {imagePath}...");
+
+                var res = MeasureTime(() =>
                 {
-                    Rgba32 color = image[x, y];
-                    image[x, y] = new Rgba32(0, color.G, color.B, color.A);
+                    var result = image.Clone();
+                    result.Mutate(context => context.Invert());
+                    return result;
+                });
+
+                Console.WriteLine($"ImageSharp:\t{res.Elapsed}");
+                res.Result.Save(Path.Combine(outDir, $"{imageTitle}.ImageSharp.bmp"));
+
+                res = MeasureTime(() => TplImageFilter.Apply(image, TplImageFilter.Invert));
+                Console.WriteLine($"TPL:\t\t{res.Elapsed}");
+                res.Result.Save(Path.Combine(outDir, $"{imageTitle}.TPL.bmp"));
+
+                res = MeasureTime(() => AleaGpuImageFilter.Apply(image, AleaGpuImageFilter.Invert));
+                Console.WriteLine($"Alea GPU:\t{res.Elapsed}");
+                res.Result.Save(Path.Combine(outDir, $"{imageTitle}.AleaGPU.bmp"));
+
+                using (var ilGpuFilter = new IlGpuFilter())
+                {
+                    res = MeasureTime(() => ilGpuFilter.Apply(image, IlGpuFilter.Invert));
+                    Console.WriteLine($"IL GPU:\t\t{res.Elapsed}");
+                    res.Result.Save(Path.Combine(outDir, $"{imageTitle}.ILGPU.bmp"));
                 }
             }
-
-            return image;
         }
     }
 }
