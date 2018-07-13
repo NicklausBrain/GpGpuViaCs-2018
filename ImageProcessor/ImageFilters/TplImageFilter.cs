@@ -10,15 +10,17 @@ namespace ImageProcessor.ImageFilters
     {
         public static Image<Rgba32> Apply(Image<Rgba32> image, Func<Rgba32, Rgba32> filter)
         {
-            image = image.Clone();
-            Parallel.For(0, image.Width,
-                x => Parallel.For(0, image.Height,
-                    y =>
-                    {
-                        image[x, y] = filter(image[x, y]);
-                    }));
+            Rgba32[] pixelArray = new Rgba32[image.Height * image.Width];
 
-            return image;
+            image.SavePixelData(pixelArray);
+
+            Parallel.For(0, pixelArray.Length, i => pixelArray[i] = filter(pixelArray[i]));
+
+            return Image.LoadPixelData(
+                config: Configuration.Default,
+                data: pixelArray,
+                width: image.Width,
+                height: image.Height);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
