@@ -4,3 +4,5 @@
 
 /.vs/GpGpuViaCs/v15
 /ImageProcessor/obj/Debug
+/packages
+/ImageProcessor/bin/Debug
