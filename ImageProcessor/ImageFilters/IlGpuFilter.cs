@@ -26,14 +26,10 @@ namespace ImageProcessor.ImageFilters
             pixelArray[index] = Invert(pixelArray[index]);
         }
 
-        public Image<Rgba32> Apply(Image<Rgba32> image, Func<Rgba32, Rgba32> filter)
+        public Rgba32[] Apply(Rgba32[] pixelArray, Func<Rgba32, Rgba32> filter)
         {
-            Rgba32[] pixelArray = new Rgba32[image.Height * image.Width];
-
             using (MemoryBuffer<Rgba32> buffer = this.gpu.Allocate<Rgba32>(pixelArray.Length))
             {
-                image.SavePixelData(pixelArray);
-
                 buffer.CopyFrom(pixelArray, 0, Index.Zero, pixelArray.Length);
 
                 this.kernel(buffer.Length, buffer.View);
@@ -41,11 +37,7 @@ namespace ImageProcessor.ImageFilters
                 // Wait for the kernel to finish...
                 this.gpu.Synchronize();
 
-                return Image.LoadPixelData(
-                    config: Configuration.Default,
-                    data: buffer.GetAsArray(),
-                    width: image.Width,
-                    height: image.Height);
+                return buffer.GetAsArray();
             }
         }
 
@@ -61,7 +53,6 @@ namespace ImageProcessor.ImageFilters
 
         public void Dispose()
         {
-            //this.context?.Dispose();
             this.gpu?.Dispose();
         }
     }
