@@ -3,7 +3,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using ILGPU;
 using ILGPU.Runtime;
-using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace ImageProcessor.ImageFilters
@@ -17,8 +16,6 @@ namespace ImageProcessor.ImageFilters
         {
             this.gpu = Accelerator.Create(new Context(), Accelerator.Accelerators.First(a => a.AcceleratorType == AcceleratorType.Cuda));
             this.kernel = this.gpu.LoadAutoGroupedStreamKernel<Index, ArrayView<Rgba32>>(ApplyKernel);
-
-            
         }
 
         public static void ApplyKernel(

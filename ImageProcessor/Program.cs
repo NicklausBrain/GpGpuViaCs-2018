@@ -22,12 +22,12 @@ namespace ImageProcessor
                 outDir = args[1];
             }
 
-            Alea.Gpu.Default.For(0, 10000000, i => i++);
-
-
             var imagePaths = Directory.GetFiles(srcDir);
 
             Test("TPL", imagePaths, outDir, image => TplImageFilter.Apply(image, TplImageFilter.Invert));
+
+            Console.WriteLine("Warming up GPU");
+            Alea.Gpu.Default.For(0, 1, i => i++);
 
             Test("AleaGPU", imagePaths, outDir, image => AleaGpuImageFilter.Apply(image, AleaGpuImageFilter.Invert));
 
@@ -37,7 +37,7 @@ namespace ImageProcessor
             }
         }
 
-        private static void Test(string tech, string[] imagePaths, string outDir, Func<Rgba32[], Rgba32[]> tranform)
+        private static void Test(string tech, string[] imagePaths, string outDir, Func<Rgba32[], Rgba32[]> transform)
         {
             Console.WriteLine($"Testing {tech}");
 
@@ -54,10 +54,10 @@ namespace ImageProcessor
                 string imageTitle = Path.GetFileName(imagePath);
 
                 stopwatch.Start();
-                var transformedPixels = tranform(pixelArray);
+                Rgba32[] transformedPixels = transform(pixelArray);
                 stopwatch.Stop();
 
-                var res =Image.LoadPixelData(
+                Image<Rgba32> res =Image.LoadPixelData(
                     config: Configuration.Default,
                     data: transformedPixels,
                     width: image.Width,
