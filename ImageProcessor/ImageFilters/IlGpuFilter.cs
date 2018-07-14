@@ -17,6 +17,8 @@ namespace ImageProcessor.ImageFilters
         {
             this.gpu = Accelerator.Create(new Context(), Accelerator.Accelerators.First(a => a.AcceleratorType == AcceleratorType.Cuda));
             this.kernel = this.gpu.LoadAutoGroupedStreamKernel<Index, ArrayView<Rgba32>>(ApplyKernel);
+
+            
         }
 
         public static void ApplyKernel(
