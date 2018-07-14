@@ -18,7 +18,7 @@ namespace ImageProcessor.ImageFilters
             this.kernel = this.gpu.LoadAutoGroupedStreamKernel<Index, ArrayView<Rgba32>>(ApplyKernel);
         }
 
-        public static void ApplyKernel(
+        private static void ApplyKernel(
             Index index, /* The global thread index (1D in this case) */
             ArrayView<Rgba32> pixelArray /* A view to a chunk of memory (1D in this case)*/)
         {

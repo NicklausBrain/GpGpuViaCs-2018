@@ -26,7 +26,7 @@ namespace ImageProcessor
 
             Test("TPL", imagePaths, outDir, image => TplImageFilter.Apply(image, TplImageFilter.Invert));
 
-            Console.WriteLine("Warming up GPU");
+            Console.WriteLine("Warming up GPU...");
             Alea.Gpu.Default.For(0, 1, i => i++);
 
             Test("AleaGPU", imagePaths, outDir, image => AleaGpuImageFilter.Apply(image, AleaGpuImageFilter.Invert));
