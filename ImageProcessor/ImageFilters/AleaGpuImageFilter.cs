@@ -12,10 +12,7 @@ namespace ImageProcessor.ImageFilters
         {
             Gpu gpu = Gpu.Default;
 
-            gpu.For(0, pixelArray.Length, x =>
-            {
-                pixelArray[x] = filter(pixelArray[x]);
-            });
+            gpu.For(0, pixelArray.Length, i => pixelArray[i] = filter(pixelArray[i]));
 
             return pixelArray;
         }
