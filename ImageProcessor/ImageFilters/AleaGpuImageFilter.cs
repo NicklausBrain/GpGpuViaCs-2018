@@ -12,6 +12,8 @@ namespace ImageProcessor.ImageFilters
         {
             Gpu gpu = Gpu.Default;
 
+            //var mem = gpu.ArrayGetMemory(pixelArray, Access.ReadWrite);
+
             gpu.For(0, pixelArray.Length, x =>
             {
                 pixelArray[x] = filter(pixelArray[x]);

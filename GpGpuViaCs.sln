@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{FF40D7
 		Images\8.bmp = Images\8.bmp
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SequenceProcessor", "SequenceProcessor\SequenceProcessor.csproj", "{9C62D982-F4CC-4723-9C11-3F992A2CC909}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4F74B8D5-10B8-4E83-97F9-34139C364AEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F74B8D5-10B8-4E83-97F9-34139C364AEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F74B8D5-10B8-4E83-97F9-34139C364AEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C62D982-F4CC-4723-9C11-3F992A2CC909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C62D982-F4CC-4723-9C11-3F992A2CC909}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C62D982-F4CC-4723-9C11-3F992A2CC909}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C62D982-F4CC-4723-9C11-3F992A2CC909}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

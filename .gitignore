@@ -8,3 +8,6 @@
 /ImageProcessor/bin/Debug
 /ImageProcessor/bin/Release
 /ImageProcessor/obj/Release
+/Images/Result
+/SequenceProcessor/bin/Release
+/SequenceProcessor/obj/Release
