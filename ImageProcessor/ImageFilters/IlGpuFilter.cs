@@ -40,7 +40,6 @@ namespace ImageProcessor.ImageFilters
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rgba32 Invert(Rgba32 color)
         {
             return new Rgba32(

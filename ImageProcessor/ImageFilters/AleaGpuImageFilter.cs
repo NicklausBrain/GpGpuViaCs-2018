@@ -17,7 +17,6 @@ namespace ImageProcessor.ImageFilters
             return pixelArray;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rgba32 Invert(Rgba32 from)
         {
             var to = new Rgba32
